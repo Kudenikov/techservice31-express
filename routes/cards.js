@@ -13,7 +13,7 @@ router.get('/', getCards);
 router.post('/', celebrate({
     body: Joi.object().keys({
       text: Joi.string().required().min(2).max(2000),
-      link: Joi.string().required().custom((value, helper) => {
+      link: Joi.string().required()/*.custom((value, helper) => {
         if (!isURL(value, { require_protocol: true })) {
           return helper.error('string.notURL');
         }
@@ -21,7 +21,7 @@ router.post('/', celebrate({
       }).messages({
         'string.notURL': 'Адрес некорректный',
         'any.required': 'Ссылка не указана',
-      }),
+      })*/,
       createdAt: Joi.string()
     }),
   }), createCard);

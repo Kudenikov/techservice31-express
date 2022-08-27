@@ -5,6 +5,7 @@ const {
 } = require('celebrate');
 const { isEmail } = require('validator');
 const { login, createUser } = require('../controllers/users');
+const { upload } = require('../controllers/upload');
 const auth = require('../middlewares/auth');
 const ErrorNotFound = require('../errors/ErrorNotFound');
 
@@ -25,6 +26,8 @@ router.post('/signin', celebrate({
   }),
 }), login);
 
+router.post('/upload', upload);
+
 router.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().custom((value, helper) => {
@@ -44,6 +47,7 @@ router.post('/signup', celebrate({
 
 router.use('/users', auth, require('./users'));
 router.use('/cards', require('./cards'));
+
 
 router.use('/', () => {
   throw new ErrorNotFound('Указан неверный путь');
